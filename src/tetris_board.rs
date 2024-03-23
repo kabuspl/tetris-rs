@@ -34,19 +34,10 @@ impl BoardState {
         }
         self.row_shift_queue = vec![];
 
-        let mut locked = false;
-        for y in 0..4 {
-            for x in 0..4 {
-                if (self.falling_state.shape[self.falling_state.rotation as usize] & (0x8000 >> (y * 4 + x))) != 0 {
-                    if self.falling_state.y + y + 2  > self.height as i8 || self.locked_state[(self.falling_state.y + y + 1) as usize][(self.falling_state.x + x) as usize].filled {
-                        locked = true;
-                        self.lock_current();
-                    }
-                }
-            }
-        }
-        if !locked {
+        if self.can_gravity() {
             self.falling_state.y += 1;
+        } else {
+            self.lock_current();
         }
         // print_board_state(&self);
 
