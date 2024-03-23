@@ -1,16 +1,13 @@
 use std::collections::VecDeque;
-use std::thread::sleep;
-use std::time::{Duration, Instant};
-
+use std::time::Instant;
 use glutin_window::GlutinWindow as Window;
-use graphics::{character, CharacterCache};
 use input::KeyState;
 use opengl_graphics::{GlGraphics, GlyphCache, OpenGL};
 use piston::event_loop::{EventSettings, Events};
-use piston::input::{RenderArgs, RenderEvent, UpdateArgs, UpdateEvent};
+use piston::input::{RenderArgs, RenderEvent, UpdateEvent};
 use piston::window::WindowSettings;
-use piston::{Button, ButtonEvent, Key, PressEvent, ReleaseEvent};
-use piston_window::{Glyphs, PistonWindow, TextureContext, TextureSettings};
+use piston::{PressEvent, ReleaseEvent};
+use piston_window::TextureSettings;
 use tetris_board::BoardState;
 
 use crate::utils::{draw_block, draw_frame, draw_tetromino};
@@ -222,9 +219,6 @@ fn main() {
 
             if app.blinking_ticks == 32 {
                 app.blinking_ticks = 0;
-                for row in app.blinking_rows {
-                    // app.board.shift_board_down(&row);
-                }
                 app.blinking_rows = vec![];
                 if app.pause {
                     app.board.gravity();

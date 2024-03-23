@@ -114,13 +114,11 @@ impl BoardState {
     fn check_completed_lines(&mut self) {
         let mut y = 0;
         for row in &self.locked_state {
-            let mut x = 0;
             let mut completed = true;
             for block in row {
                 if !block.filled {
                     completed = false;
                 }
-                x += 1;
             }
             if completed {
                 self.row_shift_queue.push(y);
